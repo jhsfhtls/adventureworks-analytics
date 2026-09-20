@@ -1,0 +1,123 @@
+version: 2
+sources:
+- name: raw_purchasing
+  database: adventure_works
+  schema: raw
+  description: Tabelas de Compras e Fornecedores da camada Raw do AdventureWorks.
+  tables:
+  - name: purchasing_productvendor
+    description: "Associa\xE7\xE3o entre produtos e fornecedores, incluindo pre\xE7\
+      os e prazos."
+    columns:
+    - name: ProductID
+      description: "Chave prim\xE1ria do produto."
+    - name: BusinessEntityID
+      description: "Chave prim\xE1ria do fornecedor."
+    - name: AverageLeadTime
+      description: "Tempo m\xE9dio de entrega em dias."
+    - name: StandardPrice
+      description: "Pre\xE7o padr\xE3o de compra cobrado pelo fornecedor."
+    - name: LastReceiptCost
+      description: "Custo unit\xE1rio na \xFAltima nota de recebimento."
+    - name: LastReceiptDate
+      description: "Data do \xFAltimo recebimento do produto."
+    - name: MinOrderQty
+      description: "Quantidade m\xEDnima exigida por pedido."
+    - name: MaxOrderQty
+      description: "Quantidade m\xE1xima permitida por pedido."
+    - name: OnOrderQty
+      description: "Quantidade atualmente em tr\xE2nsito/pedida ao fornecedor."
+    - name: UnitMeasureCode
+      description: Unidade de medida de fornecimento.
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."
+  - name: purchasing_purchaseorderheader
+    description: "Cabe\xE7alho das ordens de compra emitidas aos fornecedores."
+    columns:
+    - name: PurchaseOrderID
+      description: "Chave prim\xE1ria do pedido de compra."
+    - name: RevisionNumber
+      description: "N\xFAmero de revis\xE3o do pedido."
+    - name: Status
+      description: "Status do pedido: 1=Pendente, 2=Aprovado, 3=Rejeitado, 4=Conclu\xED\
+        do."
+    - name: EmployeeID
+      description: "Identificador do comprador respons\xE1vel (employee)."
+    - name: VendorID
+      description: Identificador do fornecedor contratado.
+    - name: ShipMethodID
+      description: Identificador da transportadora/modalidade de frete.
+    - name: OrderDate
+      description: "Data de emiss\xE3o do pedido de compra."
+    - name: ShipDate
+      description: Data prevista de despacho/envio pelo fornecedor.
+    - name: SubTotal
+      description: Valor subtotal das mercadorias compradas.
+    - name: TaxAmt
+      description: Valor dos impostos incidentes.
+    - name: Freight
+      description: Valor do frete contratado.
+    - name: TotalDue
+      description: Valor financeiro total devido ao fornecedor.
+    - name: ModifiedDate
+      description: "Data e hora da \xFAltima modifica\xE7\xE3o."
+  - name: purchasing_purchaseorderdetail
+    description: Itens de linha dos pedidos de compra.
+    columns:
+    - name: PurchaseOrderID
+      description: Identificador da ordem de compra pai.
+    - name: PurchaseOrderDetailID
+      description: "Chave prim\xE1ria da linha do pedido de compra."
+    - name: DueDate
+      description: Data de entrega prevista para o item.
+    - name: OrderQty
+      description: Quantidade de itens solicitada no pedido.
+    - name: ProductID
+      description: Identificador do produto encomendado.
+    - name: UnitPrice
+      description: "Pre\xE7o unit\xE1rio de compra contratado."
+    - name: LineTotal
+      description: "Valor total l\xEDquido da linha (OrderQty * UnitPrice)."
+    - name: ReceivedQty
+      description: Quantidade de itens fisicamente entregues pelo fornecedor.
+    - name: RejectedQty
+      description: "Quantidade de itens rejeitados na confer\xEAncia/inspe\xE7\xE3\
+        o."
+    - name: StockedQty
+      description: "Quantidade l\xEDquida estocada com sucesso (Received - Rejected)."
+    - name: ModifiedDate
+      description: "Data e hora da \xFAltima modifica\xE7\xE3o."
+  - name: purchasing_shipmethod
+    description: Modalidades de envio e transportadoras homologadas.
+    columns:
+    - name: ShipMethodID
+      description: "Chave prim\xE1ria da modalidade de frete."
+    - name: Name
+      description: "Nome comercial do servi\xE7o de frete."
+    - name: ShipBase
+      description: "Taxa m\xEDnima fixa de despacho."
+    - name: ShipRate
+      description: Taxa cobrada por unidade de peso transportada.
+    - name: rowguid
+      description: Identificador UUID do registro.
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."
+  - name: purchasing_vendor
+    description: Cadastro de fornecedores de insumos e produtos prontos.
+    columns:
+    - name: BusinessEntityID
+      description: "Chave prim\xE1ria do fornecedor."
+    - name: AccountNumber
+      description: "C\xF3digo de conta cont\xE1bil/corporativa do fornecedor."
+    - name: Name
+      description: "Raz\xE3o social ou nome fantasia do fornecedor."
+    - name: CreditRating
+      description: "Classifica\xE7\xE3o de risco de cr\xE9dito (escala 1 a 5)."
+    - name: PreferredVendorStatus
+      description: "Indica se o fornecedor possui status priorit\xE1rio/preferencial."
+    - name: ActiveFlag
+      description: "Indica se o fornecedor est\xE1 ativo para novas compras."
+    - name: PurchasingWebServiceURL
+      description: "URL de integra\xE7\xE3o de pedidos via webservice/EDI."
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."

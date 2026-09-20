@@ -1,0 +1,2 @@
+-r ai_assistant/requirements.txt
+dbt-databricks>=1.8.0

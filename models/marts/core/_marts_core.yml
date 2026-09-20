@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: dim_dates
+    description: "Dimensão calendário corporativo (2010 a 2026)."
+    columns:
+      - name: date_key
+        description: "Chave primária inteira no formato YYYYMMDD."
+        tests:
+          - unique
+          - not_null
+      - name: calendar_date
+        description: "Data civil."
+        tests:
+          - unique
+          - not_null
+      - name: is_weekend
+        description: "Flag de final de semana."
+        tests:
+          - not_null

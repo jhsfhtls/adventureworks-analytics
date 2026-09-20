@@ -1,0 +1,56 @@
+version: 2
+
+models:
+  - name: dim_vendors
+    description: "Dimensão de fornecedores homologados."
+    columns:
+      - name: vendor_id
+        description: "Chave primária do fornecedor."
+        tests:
+          - unique
+          - not_null
+      - name: credit_rating
+        description: "Classificação de risco de crédito (escala 1 a 5)."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - 1
+                  - 2
+                  - 3
+                  - 4
+                  - 5
+
+  - name: fct_purchases
+    description: "Fato de compras de matéria-prima e insumos."
+    columns:
+      - name: purchase_order_detail_id
+        description: "Chave primária da linha de compra."
+        tests:
+          - unique
+          - not_null
+      - name: vendor_id
+        description: "Chave estrangeira do fornecedor."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_vendors')
+                field: vendor_id
+      - name: product_id
+        description: "Chave estrangeira do produto comprado."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_products')
+                field: product_id
+      - name: order_date_key
+        description: "Chave de data do pedido."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_dates')
+                field: date_key

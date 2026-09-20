@@ -1,0 +1,444 @@
+version: 2
+sources:
+- name: raw_production
+  database: adventure_works
+  schema: raw
+  description: Tabelas de Manufatura, Produtos, Roteiros e Estoque da camada Raw do
+    AdventureWorks.
+  tables:
+  - name: production_billofmaterials
+    description: Estrutura de montagem de produtos (BOM - Bill of Materials) e lista
+      de componentes.
+    columns:
+    - name: BillOfMaterialsID
+      description: "Chave prim\xE1ria do registro de estrutura de produto."
+    - name: ProductAssemblyID
+      description: Identificador do produto montado pai (nulo se for raiz).
+    - name: ComponentID
+      description: Identificador do produto componente filho.
+    - name: StartDate
+      description: "Data inicial da vig\xEAncia da composi\xE7\xE3o."
+    - name: EndDate
+      description: "Data final da vig\xEAncia da composi\xE7\xE3o."
+    - name: UnitMeasureCode
+      description: Unidade de medida do componente.
+    - name: BOMLevel
+      description: "N\xEDvel hier\xE1rquico na \xE1rvore da lista de materiais."
+    - name: PerAssemblyQty
+      description: "Quantidade de pe\xE7as necess\xE1rias para montar uma unidade\
+        \ do pai."
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."
+  - name: production_culture
+    description: "Cat\xE1logo de idiomas e localidades para suporte a cat\xE1logos\
+      \ multil\xEDngues."
+    columns:
+    - name: CultureID
+      description: "C\xF3digo de cultura e idioma (ex: en, es, fr, pt)."
+    - name: Name
+      description: Nome oficial do idioma/cultura.
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."
+  - name: production_document
+    description: "Documenta\xE7\xE3o t\xE9cnica de engenharia e especifica\xE7\xF5\
+      es de fabrica\xE7\xE3o."
+    columns:
+    - name: DocumentNode
+      description: "N\xF3 de posi\xE7\xE3o hier\xE1rquica do documento."
+    - name: DocumentLevel
+      description: "N\xEDvel na hierarquia de pastas/documentos."
+    - name: Title
+      description: "T\xEDtulo descritivo do documento."
+    - name: Owner
+      description: "Identificador do colaborador propriet\xE1rio do documento."
+    - name: FolderFlag
+      description: "Indica se o registro \xE9 uma pasta organizadora."
+    - name: FileName
+      description: "Nome do arquivo f\xEDsico."
+    - name: FileExtension
+      description: "Extens\xE3o do arquivo (.pdf, .doc, etc.)."
+    - name: Revision
+      description: "N\xFAmero de revis\xE3o do documento t\xE9cnico."
+    - name: ChangeNumber
+      description: "N\xFAmero de controle de altera\xE7\xE3o de engenharia."
+    - name: Status
+      description: 'Status do documento: 1=Pendente, 2=Aprovado, 3=Obsoleto.'
+    - name: DocumentSummary
+      description: "Resumo executivo do conte\xFAdo do documento."
+    - name: Document
+      description: "Conte\xFAdo bin\xE1rio do documento armazenado."
+    - name: rowguid
+      description: Identificador UUID do registro.
+    - name: ModifiedDate
+      description: "Data e hora da \xFAltima modifica\xE7\xE3o."
+  - name: production_illustration
+    description: "Diagramas t\xE9cnicos e ilustra\xE7\xF5es esquem\xE1ticas para manufatura."
+    columns:
+    - name: IllustrationID
+      description: "Chave prim\xE1ria da ilustra\xE7\xE3o."
+    - name: Diagram
+      description: "Conte\xFAdo vetorial/XML do diagrama t\xE9cnico."
+    - name: ModifiedDate
+      description: "Data e hora da \xFAltima modifica\xE7\xE3o."
+  - name: production_location
+    description: "\xC1reas, centros de trabalho e postos operacionais da f\xE1brica."
+    columns:
+    - name: LocationID
+      description: "Chave prim\xE1ria do local de fabrica\xE7\xE3o/posto de trabalho."
+    - name: Name
+      description: 'Nome do centro de trabalho (ex: Pintura, Montagem, Usinagem).'
+    - name: CostRate
+      description: "Custo hor\xE1rio de opera\xE7\xE3o do centro de trabalho."
+    - name: Availability
+      description: "Capacidade de horas dispon\xEDveis de opera\xE7\xE3o."
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."
+  - name: production_product
+    description: "Cat\xE1logo central de produtos acabados, subconjuntos e pe\xE7\
+      as compradas."
+    columns:
+    - name: ProductID
+      description: "Chave prim\xE1ria do produto."
+    - name: Name
+      description: Nome comercial do produto.
+    - name: ProductNumber
+      description: "C\xF3digo alfanum\xE9rico SKU do produto."
+    - name: MakeFlag
+      description: "Indica se \xE9 fabricado internamente (true) ou comprado pronto\
+        \ (false)."
+    - name: FinishedGoodsFlag
+      description: "Indica se o produto \xE9 comercializado para venda direta (true)."
+    - name: Color
+      description: "Cor prim\xE1ria do produto."
+    - name: SafetyStockLevel
+      description: "Estoque m\xEDnimo de seguran\xE7a exigido."
+    - name: ReorderPoint
+      description: Ponto de ressuprimento de estoque para novo pedido.
+    - name: StandardCost
+      description: "Custo cont\xE1bil padr\xE3o de produ\xE7\xE3o ou aquisi\xE7\xE3\
+        o."
+    - name: ListPrice
+      description: "Pre\xE7o de tabela sugerido para venda."
+    - name: Size
+      description: "Dimens\xE3o ou tamanho (ex: 48, S, XL)."
+    - name: SizeUnitMeasureCode
+      description: 'Unidade de medida do tamanho (ex: CM).'
+    - name: WeightUnitMeasureCode
+      description: 'Unidade de medida de peso (ex: LB, KG).'
+    - name: Weight
+      description: Peso do produto.
+    - name: DaysToManufacture
+      description: "Tempo padr\xE3o de ciclo de manufatura em dias \xFAteis."
+    - name: ProductLine
+      description: 'Linha de produto: R (Road), M (Mountain), T (Touring), S (Standard).'
+    - name: Class
+      description: "Classe de produto: H (Alto padr\xE3o), M (M\xE9dio), L (Entrada)."
+    - name: Style
+      description: 'Estilo do produto: W (Feminino), M (Masculino), U (Universal).'
+    - name: ProductSubcategoryID
+      description: Identificador da subcategoria a que o produto pertence.
+    - name: ProductModelID
+      description: Identificador do modelo conceitual de engenharia.
+    - name: SellStartDate
+      description: "Data em que o produto come\xE7ou a ser comercializado."
+    - name: SellEndDate
+      description: "Data de encerramento da comercializa\xE7\xE3o."
+    - name: DiscontinuedDate
+      description: Data em que o produto foi oficialmente descontinuado.
+    - name: rowguid
+      description: Identificador UUID do registro.
+    - name: ModifiedDate
+      description: "Data e hora da \xFAltima modifica\xE7\xE3o."
+  - name: production_productcategory
+    description: "Macro-categorias de alto n\xEDvel dos produtos da empresa."
+    columns:
+    - name: ProductCategoryID
+      description: "Chave prim\xE1ria da categoria de produto."
+    - name: Name
+      description: 'Nome da categoria (ex: Bikes, Components, Clothing, Accessories).'
+    - name: rowguid
+      description: Identificador UUID do registro.
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."
+  - name: production_productcosthistory
+    description: "Hist\xF3rico de evolu\xE7\xE3o e altera\xE7\xF5es no custo cont\xE1\
+      bil padr\xE3o dos produtos."
+    columns:
+    - name: ProductID
+      description: Identificador do produto.
+    - name: StartDate
+      description: "Data de in\xEDcio da vig\xEAncia do custo."
+    - name: EndDate
+      description: "Data de t\xE9rmino da vig\xEAncia do custo."
+    - name: StandardCost
+      description: "Custo cont\xE1bil padr\xE3o vigente no per\xEDodo."
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."
+  - name: production_productdescription
+    description: Descritivos textuais e argumentos comerciais dos produtos.
+    columns:
+    - name: ProductDescriptionID
+      description: "Chave prim\xE1ria da descri\xE7\xE3o de produto."
+    - name: Description
+      description: "Texto descritivo das caracter\xEDsticas e diferenciais do produto."
+    - name: rowguid
+      description: Identificador UUID do registro.
+    - name: ModifiedDate
+      description: "Data e hora da \xFAltima modifica\xE7\xE3o."
+  - name: production_productdocument
+    description: "Associa\xE7\xE3o entre produtos e seus manuais t\xE9cnicos e documentos."
+    columns:
+    - name: ProductID
+      description: Identificador do produto associado.
+    - name: DocumentNode
+      description: "N\xF3 de refer\xEAncia ao documento t\xE9cnico de engenharia."
+    - name: ModifiedDate
+      description: "Data e hora da \xFAltima modifica\xE7\xE3o."
+  - name: production_productinventory
+    description: "Saldos e posi\xE7\xF5es f\xEDsicas de estoque em cada centro de\
+      \ armazenagem."
+    columns:
+    - name: ProductID
+      description: Identificador do produto em estoque.
+    - name: LocationID
+      description: Identificador do local/posto de armazenagem.
+    - name: Shelf
+      description: "Letra ou c\xF3digo identificador da prateleira."
+    - name: Bin
+      description: "N\xFAmero do compartimento ou escaninho dentro da prateleira."
+    - name: Quantity
+      description: "Quantidade f\xEDsica dispon\xEDvel em estoque."
+    - name: rowguid
+      description: Identificador UUID do registro.
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."
+  - name: production_productlistpricehistory
+    description: "Hist\xF3rico de altera\xE7\xF5es nos pre\xE7os de tabela praticados."
+    columns:
+    - name: ProductID
+      description: Identificador do produto.
+    - name: StartDate
+      description: "Data de in\xEDcio da vig\xEAncia do pre\xE7o."
+    - name: EndDate
+      description: "Data de t\xE9rmino da vig\xEAncia do pre\xE7o."
+    - name: ListPrice
+      description: "Pre\xE7o de tabela praticado no intervalo de vig\xEAncia."
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."
+  - name: production_productmodel
+    description: "Modelos conceituais e fam\xEDlias de engenharia de produtos."
+    columns:
+    - name: ProductModelID
+      description: "Chave prim\xE1ria do modelo de produto."
+    - name: Name
+      description: 'Nome comercial do modelo (ex: Mountain-100, Road-250).'
+    - name: CatalogDescription
+      description: "Descritivo comercial detalhado de cat\xE1logo em XML."
+    - name: Instructions
+      description: "Instru\xE7\xF5es operacionais de manufatura em XML."
+    - name: rowguid
+      description: Identificador UUID do registro.
+    - name: ModifiedDate
+      description: "Data e hora da \xFAltima modifica\xE7\xE3o."
+  - name: production_productmodelillustration
+    description: "Associa\xE7\xE3o entre modelos de produto e suas ilustra\xE7\xF5\
+      es de montagem."
+    columns:
+    - name: ProductModelID
+      description: Identificador do modelo de produto.
+    - name: IllustrationID
+      description: "Identificador da ilustra\xE7\xE3o esquem\xE1tica."
+    - name: ModifiedDate
+      description: "Data e hora da \xFAltima modifica\xE7\xE3o."
+  - name: production_productmodelproductdescriptionculture
+    description: "Rela\xE7\xE3o N:N associando modelo, descri\xE7\xF5es traduzidas\
+      \ e idiomas."
+    columns:
+    - name: ProductModelID
+      description: Identificador do modelo do produto.
+    - name: ProductDescriptionID
+      description: "Identificador da descri\xE7\xE3o textual."
+    - name: CultureID
+      description: "C\xF3digo do idioma em que a descri\xE7\xE3o est\xE1 escrita."
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."
+  - name: production_productphoto
+    description: "Imagens e fotografias oficiais dos produtos em alta e baixa resolu\xE7\
+      \xE3o."
+    columns:
+    - name: ProductPhotoID
+      description: "Chave prim\xE1ria do registro da foto."
+    - name: ThumbNailPhoto
+      description: "Imagem da miniatura em bin\xE1rio/base64."
+    - name: ThumbnailPhotoFileName
+      description: Nome do arquivo da foto em miniatura.
+    - name: LargePhoto
+      description: "Imagem em alta resolu\xE7\xE3o em bin\xE1rio/base64."
+    - name: LargePhotoFileName
+      description: "Nome do arquivo da foto em alta resolu\xE7\xE3o."
+    - name: ModifiedDate
+      description: "Data e hora da \xFAltima modifica\xE7\xE3o."
+  - name: production_productproductphoto
+    description: "Associa\xE7\xE3o de produtos a m\xFAltiplas fotografias de cat\xE1\
+      logo."
+    columns:
+    - name: ProductID
+      description: Identificador do produto.
+    - name: ProductPhotoID
+      description: Identificador da fotografia.
+    - name: Primary
+      description: "Indica se \xE9 a foto principal exibida no cat\xE1logo e e-commerce."
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."
+  - name: production_productreview
+    description: "Avalia\xE7\xF5es, notas e coment\xE1rios deixados pelos clientes\
+      \ sobre produtos."
+    columns:
+    - name: ProductReviewID
+      description: "Chave prim\xE1ria da avalia\xE7\xE3o de produto."
+    - name: ProductID
+      description: Identificador do produto avaliado.
+    - name: ReviewerName
+      description: "Nome do cliente autor da avalia\xE7\xE3o."
+    - name: ReviewDate
+      description: "Data e hora em que a avalia\xE7\xE3o foi submetida."
+    - name: EmailAddress
+      description: E-mail do cliente avaliador.
+    - name: Rating
+      description: "Nota num\xE9rica atribu\xEDda ao produto (escala de 1 a 5)."
+    - name: Comments
+      description: "Coment\xE1rios e feedback qualitativo do cliente."
+    - name: ModifiedDate
+      description: "Data e hora da \xFAltima modifica\xE7\xE3o."
+  - name: production_productsubcategory
+    description: "Subcategorias intermedi\xE1rias que agrupam tipos espec\xEDficos\
+      \ de produtos."
+    columns:
+    - name: ProductSubcategoryID
+      description: "Chave prim\xE1ria da subcategoria de produto."
+    - name: ProductCategoryID
+      description: Identificador da categoria pai a que pertence.
+    - name: Name
+      description: 'Nome da subcategoria (ex: Mountain Bikes, Road Frames, Gloves).'
+    - name: rowguid
+      description: Identificador UUID do registro.
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."
+  - name: production_scrapreason
+    description: "Cat\xE1logo de motivos padronizados para refugo ou sucateamento\
+      \ de pe\xE7as na f\xE1brica."
+    columns:
+    - name: ScrapReasonID
+      description: "Chave prim\xE1ria do motivo de refugo."
+    - name: Name
+      description: "Descri\xE7\xE3o da causa de refugo (ex: Dimens\xF5es fora do padr\xE3\
+        o, Falha na pintura)."
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."
+  - name: production_transactionhistory
+    description: "Hist\xF3rico de transa\xE7\xF5es e movimenta\xE7\xF5es correntes\
+      \ de estoque."
+    columns:
+    - name: TransactionID
+      description: "Chave prim\xE1ria da movimenta\xE7\xE3o."
+    - name: ProductID
+      description: Identificador do produto movimentado.
+    - name: ReferenceOrderID
+      description: "N\xFAmero da ordem que originou a transa\xE7\xE3o (PO, SO ou WO)."
+    - name: ReferenceOrderLineID
+      description: "N\xFAmero do item de linha da ordem de origem."
+    - name: TransactionDate
+      description: "Data em que a movimenta\xE7\xE3o ocorreu."
+    - name: TransactionType
+      description: "Tipo da transa\xE7\xE3o: W (Ordem de Produ\xE7\xE3o), S (Venda),\
+        \ P (Compra)."
+    - name: Quantity
+      description: "Quantidade f\xEDsica transacionada."
+    - name: ActualCost
+      description: "Custo real apurado da movimenta\xE7\xE3o."
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."
+  - name: production_transactionhistoryarchive
+    description: "Hist\xF3rico arquivado de movimenta\xE7\xF5es e transa\xE7\xF5es\
+      \ passadas de estoque."
+    columns:
+    - name: TransactionID
+      description: "Chave prim\xE1ria da movimenta\xE7\xE3o arquivada."
+    - name: ProductID
+      description: Identificador do produto movimentado.
+    - name: ReferenceOrderID
+      description: "N\xFAmero da ordem de origem."
+    - name: ReferenceOrderLineID
+      description: Linha da ordem de origem.
+    - name: TransactionDate
+      description: "Data da movimenta\xE7\xE3o arquivada."
+    - name: TransactionType
+      description: "Tipo da transa\xE7\xE3o: W (Produ\xE7\xE3o), S (Venda), P (Compra)."
+    - name: Quantity
+      description: "Quantidade f\xEDsica transacionada."
+    - name: ActualCost
+      description: "Custo real apurado da movimenta\xE7\xE3o arquivada."
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."
+  - name: production_unitmeasure
+    description: Unidades padronizadas de medida para peso, comprimento e volume.
+    columns:
+    - name: UnitMeasureCode
+      description: "C\xF3digo da unidade de medida (ex: KG, L, M, EA)."
+    - name: Name
+      description: Nome oficial por extenso da unidade de medida.
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."
+  - name: production_workorder
+    description: "Ordens de produ\xE7\xE3o geradas para montagem e fabrica\xE7\xE3\
+      o de produtos."
+    columns:
+    - name: WorkOrderID
+      description: "Chave prim\xE1ria da ordem de produ\xE7\xE3o."
+    - name: ProductID
+      description: Identificador do produto a ser fabricado.
+    - name: OrderQty
+      description: "Quantidade planejada e solicitada na ordem de produ\xE7\xE3o."
+    - name: StockedQty
+      description: "Quantidade aprovada e estocada ap\xF3s a fabrica\xE7\xE3o."
+    - name: ScrappedQty
+      description: Quantidade perdida ou sucateada durante o processo.
+    - name: StartDate
+      description: "Data de in\xEDcio da fabrica\xE7\xE3o."
+    - name: EndDate
+      description: "Data de conclus\xE3o da ordem de produ\xE7\xE3o."
+    - name: DueDate
+      description: "Data prometida de entrega da produ\xE7\xE3o."
+    - name: ScrapReasonID
+      description: Identificador do motivo do refugo (se houver perdas).
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."
+  - name: production_workorderrouting
+    description: "Roteiro detalhado das opera\xE7\xF5es fabris executadas em cada\
+      \ ordem de produ\xE7\xE3o."
+    columns:
+    - name: WorkOrderID
+      description: "Identificador da ordem de produ\xE7\xE3o associada."
+    - name: ProductID
+      description: Identificador do produto em processo de manufatura.
+    - name: OperationSequence
+      description: "N\xFAmero de sequ\xEAncia da opera\xE7\xE3o na esteira (1, 2,\
+        \ 3...)."
+    - name: LocationID
+      description: "Posto ou centro de trabalho onde a etapa \xE9 executada."
+    - name: ScheduledStartDate
+      description: "Data planejada para in\xEDcio da etapa."
+    - name: ScheduledEndDate
+      description: "Data planejada para conclus\xE3o da etapa."
+    - name: ActualStartDate
+      description: "Data real de in\xEDcio da opera\xE7\xE3o."
+    - name: ActualEndDate
+      description: "Data real de conclus\xE3o da opera\xE7\xE3o."
+    - name: ActualResourceHrs
+      description: "Horas de m\xE3o-de-obra e m\xE1quina consumidas na etapa."
+    - name: PlannedCost
+      description: "Custo or\xE7ado e previsto para a etapa fabril."
+    - name: ActualCost
+      description: "Custo real incorrido na execu\xE7\xE3o da etapa."
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."

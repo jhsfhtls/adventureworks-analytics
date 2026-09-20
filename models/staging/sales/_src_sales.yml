@@ -1,0 +1,344 @@
+version: 2
+sources:
+- name: raw_sales
+  database: adventure_works
+  schema: raw
+  description: Tabelas de Vendas, Clientes, Pedidos e Lojas da camada Raw do AdventureWorks.
+  tables:
+  - name: sales_countryregioncurrency
+    description: "Associa\xE7\xE3o entre pa\xEDses/regi\xF5es e suas moedas padr\xE3\
+      o."
+    columns:
+    - name: CountryRegionCode
+      description: "C\xF3digo do pa\xEDs ou regi\xE3o."
+    - name: CurrencyCode
+      description: "C\xF3digo da moeda utilizada."
+    - name: ModifiedDate
+      description: "Data e hora da \xFAltima modifica\xE7\xE3o."
+  - name: sales_creditcard
+    description: "Cart\xF5es de cr\xE9dito registrados para pagamento de pedidos."
+    columns:
+    - name: CreditCardID
+      description: "Chave prim\xE1ria do cart\xE3o."
+    - name: CardType
+      description: "Bandeira/tipo do cart\xE3o (ex: SuperiorCard, Distinguish)."
+    - name: CardNumber
+      description: "N\xFAmero do cart\xE3o de cr\xE9dito."
+    - name: ExpMonth
+      description: "M\xEAs de vencimento."
+    - name: ExpYear
+      description: Ano de vencimento.
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."
+  - name: sales_currency
+    description: "Cat\xE1logo de moedas estrangeiras suportadas."
+    columns:
+    - name: CurrencyCode
+      description: "C\xF3digo ISO de 3 caracteres da moeda."
+    - name: Name
+      description: Nome oficial da moeda.
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."
+  - name: sales_currencyrate
+    description: "Taxas di\xE1rias de convers\xE3o cambial."
+    columns:
+    - name: CurrencyRateID
+      description: "Chave prim\xE1ria da taxa cambial."
+    - name: CurrencyRateDate
+      description: "Data de refer\xEAncia da cota\xE7\xE3o cambial."
+    - name: FromCurrencyCode
+      description: "Moeda de origem da convers\xE3o."
+    - name: ToCurrencyCode
+      description: "Moeda de destino da convers\xE3o."
+    - name: AverageRate
+      description: "Taxa de c\xE2mbio m\xE9dia do dia."
+    - name: EndOfDayRate
+      description: "Taxa de c\xE2mbio no fechamento do dia."
+    - name: ModifiedDate
+      description: "Data e hora da \xFAltima modifica\xE7\xE3o."
+  - name: sales_customer
+    description: Clientes cadastrados para compras (B2C e B2B).
+    columns:
+    - name: CustomerID
+      description: "Chave prim\xE1ria do cliente."
+    - name: PersonID
+      description: "Identificador da pessoa f\xEDsica (preenchido para clientes B2C)."
+    - name: StoreID
+      description: Identificador da loja/revendedora (preenchido para clientes B2B).
+    - name: TerritoryID
+      description: "Territ\xF3rio de vendas ao qual o cliente pertence."
+    - name: AccountNumber
+      description: "C\xF3digo identificador da conta do cliente."
+    - name: rowguid
+      description: Identificador UUID do registro.
+    - name: ModifiedDate
+      description: "Data e hora da \xFAltima modifica\xE7\xE3o."
+  - name: sales_personcreditcard
+    description: "Associa\xE7\xE3o entre indiv\xEDduos e seus cart\xF5es de cr\xE9\
+      dito."
+    columns:
+    - name: BusinessEntityID
+      description: "Identificador da pessoa f\xEDsica propriet\xE1ria do cart\xE3\
+        o."
+    - name: CreditCardID
+      description: "Identificador do cart\xE3o de cr\xE9dito associado."
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."
+  - name: sales_salesorderheader
+    description: "Cabe\xE7alho das ordens de venda com totais e dados de entrega."
+    columns:
+    - name: SalesOrderID
+      description: "Chave prim\xE1ria do pedido de venda."
+    - name: RevisionNumber
+      description: "N\xFAmero de revis\xE3o do pedido."
+    - name: OrderDate
+      description: "Data de coloca\xE7\xE3o do pedido de venda."
+    - name: DueDate
+      description: Data de vencimento do pedido.
+    - name: ShipDate
+      description: "Data de expedi\xE7\xE3o do pedido."
+    - name: Status
+      description: 'Status do pedido: 1=Em processo, 2=Aprovado, 3=Pendente, 4=Rejeitado,
+        5=Enviado, 6=Cancelado.'
+    - name: OnlineOrderFlag
+      description: Indica se o pedido foi realizado pelo canal digital online (e-commerce).
+    - name: SalesOrderNumber
+      description: "N\xFAmero formatado de identifica\xE7\xE3o do pedido."
+    - name: PurchaseOrderNumber
+      description: "N\xFAmero do pedido de compra do cliente (B2B)."
+    - name: AccountNumber
+      description: "C\xF3digo da conta de faturamento do cliente."
+    - name: CustomerID
+      description: Identificador do cliente solicitante.
+    - name: SalesPersonID
+      description: "Identificador do vendedor respons\xE1vel (nulo se online)."
+    - name: TerritoryID
+      description: "Territ\xF3rio de vendas onde a transa\xE7\xE3o foi originada."
+    - name: BillToAddressID
+      description: "Endere\xE7o de cobran\xE7a da fatura."
+    - name: ShipToAddressID
+      description: "Endere\xE7o de entrega da mercadoria."
+    - name: ShipMethodID
+      description: Transportadora e modalidade de envio escolhida.
+    - name: CreditCardID
+      description: "Cart\xE3o de cr\xE9dito utilizado no pagamento."
+    - name: CreditCardApprovalCode
+      description: "C\xF3digo de autoriza\xE7\xE3o da transa\xE7\xE3o com a operadora."
+    - name: CurrencyRateID
+      description: "Taxa de convers\xE3o cambial aplicada ao pedido."
+    - name: SubTotal
+      description: "Valor total l\xEDquido das mercadorias vendidas."
+    - name: TaxAmt
+      description: Valor dos impostos incidentes sobre o pedido.
+    - name: Freight
+      description: Valor do frete cobrado do cliente.
+    - name: TotalDue
+      description: Valor total final a ser pago pelo pedido.
+    - name: Comment
+      description: "Observa\xE7\xF5es e coment\xE1rios registrados no pedido."
+    - name: rowguid
+      description: Identificador UUID do registro.
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."
+  - name: sales_salesorderdetail
+    description: Itens de linha dos pedidos de venda.
+    columns:
+    - name: SalesOrderID
+      description: Identificador do pedido de venda pai.
+    - name: SalesOrderDetailID
+      description: "Chave prim\xE1ria do item do pedido."
+    - name: CarrierTrackingNumber
+      description: "C\xF3digo de rastreamento do pacote junto \xE0 transportadora."
+    - name: OrderQty
+      description: Quantidade comercializada do produto.
+    - name: ProductID
+      description: Identificador do produto vendido.
+    - name: SpecialOfferID
+      description: "Identificador da promo\xE7\xE3o ou desconto aplicado."
+    - name: UnitPrice
+      description: "Pre\xE7o unit\xE1rio de venda praticado."
+    - name: UnitPriceDiscount
+      description: "Percentual ou valor de desconto unit\xE1rio concedido."
+    - name: LineTotal
+      description: Valor total da linha de venda.
+    - name: rowguid
+      description: Identificador UUID do registro.
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."
+  - name: sales_salesorderheadersalesreason
+    description: "Associa\xE7\xE3o entre pedidos de venda e os motivos da compra."
+    columns:
+    - name: SalesOrderID
+      description: Identificador do pedido de venda.
+    - name: SalesReasonID
+      description: Identificador do motivo de venda registrado.
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."
+  - name: sales_salesperson
+    description: Cadastro de representantes comerciais e equipe de vendas.
+    columns:
+    - name: BusinessEntityID
+      description: "Chave prim\xE1ria do vendedor (FK para humanresources_employee)."
+    - name: TerritoryID
+      description: "Territ\xF3rio de vendas sob responsabilidade do vendedor."
+    - name: SalesQuota
+      description: "Meta peri\xF3dica estipulada de vendas."
+    - name: Bonus
+      description: "Valor de b\xF4nus por atingimento de metas."
+    - name: CommissionPct
+      description: "Percentual de comiss\xE3o sobre vendas realizadas."
+    - name: SalesYTD
+      description: Volume total de vendas acumulado no ano atual (Year to Date).
+    - name: SalesLastYear
+      description: Volume total de vendas acumulado no ano anterior.
+    - name: rowguid
+      description: Identificador UUID do registro.
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."
+  - name: sales_salespersonquotahistory
+    description: "Hist\xF3rico de altera\xE7\xF5es e evolu\xE7\xE3o das cotas de vendas."
+    columns:
+    - name: BusinessEntityID
+      description: Identificador do vendedor.
+    - name: QuotaDate
+      description: "Data de in\xEDcio da vig\xEAncia da meta."
+    - name: SalesQuota
+      description: "Valor da meta de vendas estabelecida para o per\xEDodo."
+    - name: rowguid
+      description: Identificador UUID do registro.
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."
+  - name: sales_salesreason
+    description: "Motivos declarados para a realiza\xE7\xE3o da compra pelos clientes."
+    columns:
+    - name: SalesReasonID
+      description: "Chave prim\xE1ria do motivo de venda."
+    - name: Name
+      description: 'Nome descritivo do motivo (ex: Price, Promotion, Review).'
+    - name: ReasonType
+      description: Categoria do motivo (Marketing, Other).
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."
+  - name: sales_salestaxrate
+    description: "Al\xEDquotas de impostos estaduais e municipais sobre vendas."
+    columns:
+    - name: SalesTaxRateID
+      description: "Chave prim\xE1ria da taxa de imposto."
+    - name: StateProvinceID
+      description: "Estado ou prov\xEDncia onde a al\xEDquota incide."
+    - name: TaxType
+      description: Tipo de tributo (1=Estadual, 2=Condado, 3=Municipal).
+    - name: TaxRate
+      description: "Percentual da al\xEDquota de imposto."
+    - name: Name
+      description: Nome descritivo da regra de imposto.
+    - name: rowguid
+      description: Identificador UUID do registro.
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."
+  - name: sales_salesterritory
+    description: "Territ\xF3rios e regi\xF5es comerciais estruturadas."
+    columns:
+    - name: TerritoryID
+      description: "Chave prim\xE1ria do territ\xF3rio."
+    - name: Name
+      description: "Nome do territ\xF3rio (ex: Northwest, France, Australia)."
+    - name: CountryRegionCode
+      description: "C\xF3digo do pa\xEDs correspondente."
+    - name: Group
+      description: "Macrorregi\xE3o geopol\xEDtica (North America, Europe, Pacific)."
+    - name: SalesYTD
+      description: "Vendas acumuladas no territ\xF3rio no ano corrente."
+    - name: SalesLastYear
+      description: "Vendas acumuladas no territ\xF3rio no ano anterior."
+    - name: CostYTD
+      description: Custos operacionais comerciais acumulados no ano.
+    - name: CostLastYear
+      description: Custos operacionais comerciais do ano anterior.
+    - name: rowguid
+      description: Identificador UUID do registro.
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."
+  - name: sales_salesterritoryhistory
+    description: "Hist\xF3rico de aloca\xE7\xF5es dos vendedores em territ\xF3rios\
+      \ comerciais."
+    columns:
+    - name: BusinessEntityID
+      description: Identificador do vendedor.
+    - name: TerritoryID
+      description: "Identificador do territ\xF3rio atribu\xEDdo."
+    - name: StartDate
+      description: "Data de in\xEDcio da atua\xE7\xE3o no territ\xF3rio."
+    - name: EndDate
+      description: "Data de t\xE9rmino da atua\xE7\xE3o (nulo se ativa)."
+    - name: rowguid
+      description: Identificador UUID do registro.
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."
+  - name: sales_shoppingcartitem
+    description: Itens adicionados aos carrinhos de compra ativos da plataforma web.
+    columns:
+    - name: ShoppingCartItemID
+      description: "Chave prim\xE1ria do item do carrinho."
+    - name: ShoppingCartID
+      description: "Identificador da sess\xE3o/carrinho do usu\xE1rio."
+    - name: Quantity
+      description: Quantidade de itens selecionada.
+    - name: ProductID
+      description: Identificador do produto adicionado.
+    - name: DateCreated
+      description: "Data e hora de inser\xE7\xE3o no carrinho."
+    - name: ModifiedDate
+      description: "Data e hora da \xFAltima modifica\xE7\xE3o."
+  - name: sales_specialoffer
+    description: "Campanhas promocionais, descontos por volume e liquida\xE7\xF5es."
+    columns:
+    - name: SpecialOfferID
+      description: "Chave prim\xE1ria da oferta promocional."
+    - name: Description
+      description: "Descri\xE7\xE3o detalhada da promo\xE7\xE3o."
+    - name: DiscountPct
+      description: Percentual de desconto concedido.
+    - name: Type
+      description: "Tipo de promo\xE7\xE3o (Volume Discount, Seasonal, etc.)."
+    - name: Category
+      description: "P\xFAblico-alvo da promo\xE7\xE3o (Reseller, Customer)."
+    - name: StartDate
+      description: "Data inicial da vig\xEAncia da promo\xE7\xE3o."
+    - name: EndDate
+      description: "Data final da vig\xEAncia da promo\xE7\xE3o."
+    - name: MinQty
+      description: "Quantidade m\xEDnima de compra para ativar o desconto."
+    - name: MaxQty
+      description: "Quantidade m\xE1xima de compra com direito ao desconto."
+    - name: rowguid
+      description: Identificador UUID do registro.
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."
+  - name: sales_specialofferproduct
+    description: "Associa\xE7\xE3o entre produtos e as promo\xE7\xF5es ativas."
+    columns:
+    - name: SpecialOfferID
+      description: "Identificador da promo\xE7\xE3o especial."
+    - name: ProductID
+      description: "Identificador do produto eleg\xEDvel."
+    - name: rowguid
+      description: Identificador UUID do registro.
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."
+  - name: sales_store
+    description: "Lojas f\xEDsicas parceiras e revendedoras autorizadas (B2B)."
+    columns:
+    - name: BusinessEntityID
+      description: "Chave prim\xE1ria da loja (FK para person_businessentity)."
+    - name: Name
+      description: "Raz\xE3o social ou nome fantasia da loja cliente."
+    - name: SalesPersonID
+      description: "Vendedor de contas corporativas respons\xE1vel pelo atendimento."
+    - name: Demographics
+      description: "Informa\xE7\xF5es demogr\xE1ficas da loja (faturamento anual,\
+        \ metragem) em XML."
+    - name: rowguid
+      description: Identificador UUID do registro.
+    - name: ModifiedDate
+      description: "Data e hora da \xFAltima modifica\xE7\xE3o."

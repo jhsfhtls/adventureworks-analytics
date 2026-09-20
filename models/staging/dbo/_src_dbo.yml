@@ -1,0 +1,9 @@
+version: 2
+sources:
+- name: raw_dbo
+  database: adventure_works
+  schema: raw
+  tables:
+  - name: dbo_awbuildversion
+  - name: dbo_databaselog
+  - name: dbo_errorlog

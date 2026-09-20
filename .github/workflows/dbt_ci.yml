@@ -1,0 +1,32 @@
+name: Portfolio dbt validation
+
+# Ative manualmente depois de configurar os secrets e provisionar os dados.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    env:
+      DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+      DATABRICKS_HTTP_PATH: ${{ secrets.DATABRICKS_HTTP_PATH }}
+      DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - run: python -m pip install -r requirements.txt
+      - name: Configure dbt profile
+        run: |
+          mkdir -p "$HOME/.dbt"
+          cp profiles.example.yml "$HOME/.dbt/profiles.yml"
+      - run: dbt deps
+      - run: dbt debug
+      - run: dbt compile
+      - run: dbt test

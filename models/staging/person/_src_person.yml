@@ -1,0 +1,192 @@
+version: 2
+sources:
+- name: raw_person
+  database: adventure_works
+  schema: raw
+  description: "Tabelas de Pessoas, Contatos e Localiza\xE7\xF5es da camada Raw do\
+    \ AdventureWorks."
+  tables:
+  - name: person_address
+    description: "Endere\xE7os f\xEDsicos de clientes, parceiros e colaboradores."
+    columns:
+    - name: AddressID
+      description: "Chave prim\xE1ria do endere\xE7o."
+    - name: AddressLine1
+      description: Primeira linha do logradouro.
+    - name: AddressLine2
+      description: "Segunda linha complementar do endere\xE7o."
+    - name: City
+      description: Nome da cidade.
+    - name: StateProvinceID
+      description: Chave estrangeira referenciando person_stateprovince.
+    - name: PostalCode
+      description: "C\xF3digo postal / CEP."
+    - name: rowguid
+      description: Identificador UUID do registro.
+    - name: ModifiedDate
+      description: "Data e hora da \xFAltima modifica\xE7\xE3o."
+  - name: person_addresstype
+    description: "Tipos de uso do endere\xE7o (Cobran\xE7a, Entrega, Matriz, etc.)."
+    columns:
+    - name: AddressTypeID
+      description: "Chave prim\xE1ria do tipo de endere\xE7o."
+    - name: Name
+      description: "Descri\xE7\xE3o do tipo de endere\xE7o (ex: Billing, Shipping)."
+    - name: rowguid
+      description: Identificador UUID do registro.
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."
+  - name: person_businessentity
+    description: "Entidade base unificadora para qualquer pessoa f\xEDsica ou jur\xED\
+      dica (Person, Vendor, Store)."
+    columns:
+    - name: BusinessEntityID
+      description: "Chave prim\xE1ria da entidade corporativa."
+    - name: rowguid
+      description: Identificador UUID do registro.
+    - name: ModifiedDate
+      description: "Data e hora da \xFAltima modifica\xE7\xE3o."
+  - name: person_businessentityaddress
+    description: "Tabela associativa ligando entidades a seus m\xFAltiplos endere\xE7\
+      os e seus tipos."
+    columns:
+    - name: BusinessEntityID
+      description: Identificador da entidade corporativa.
+    - name: AddressID
+      description: "Identificador do endere\xE7o associado."
+    - name: AddressTypeID
+      description: "Identificador da finalidade do endere\xE7o."
+    - name: rowguid
+      description: Identificador UUID do registro.
+    - name: ModifiedDate
+      description: "Data e hora da \xFAltima modifica\xE7\xE3o."
+  - name: person_businessentitycontact
+    description: Contatos e pontos focais de empresas parceiras, lojas e fornecedores.
+    columns:
+    - name: BusinessEntityID
+      description: "Identificador da pessoa jur\xEDdica."
+    - name: PersonID
+      description: "Identificador da pessoa f\xEDsica de contato."
+    - name: ContactTypeID
+      description: Identificador do cargo ou tipo de contato.
+    - name: rowguid
+      description: Identificador UUID do registro.
+    - name: ModifiedDate
+      description: "Data e hora da \xFAltima modifica\xE7\xE3o."
+  - name: person_contacttype
+    description: "Classifica\xE7\xE3o das fun\xE7\xF5es de contato em entidades corporativas."
+    columns:
+    - name: ContactTypeID
+      description: "Chave prim\xE1ria do tipo de contato."
+    - name: Name
+      description: "Nome da fun\xE7\xE3o/cargo (ex: Purchasing Agent, Sales Representative)."
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."
+  - name: person_countryregion
+    description: "Pa\xEDses e regi\xF5es territoriais mapeadas."
+    columns:
+    - name: CountryRegionCode
+      description: "C\xF3digo ISO de 2 letras do pa\xEDs ou regi\xE3o."
+    - name: Name
+      description: "Nome oficial do pa\xEDs ou regi\xE3o."
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."
+  - name: person_emailaddress
+    description: "Endere\xE7os de correio eletr\xF4nico associados a pessoas."
+    columns:
+    - name: BusinessEntityID
+      description: "Identificador da pessoa f\xEDsica propriet\xE1ria do e-mail."
+    - name: EmailAddressID
+      description: "Chave prim\xE1ria do endere\xE7o de e-mail."
+    - name: EmailAddress
+      description: "Endere\xE7o de e-mail."
+    - name: rowguid
+      description: Identificador UUID do registro.
+    - name: ModifiedDate
+      description: "Data e hora da \xFAltima modifica\xE7\xE3o."
+  - name: person_password
+    description: "Hashes de autentica\xE7\xE3o de usu\xE1rios e colaboradores."
+    columns:
+    - name: BusinessEntityID
+      description: "Identificador da pessoa f\xEDsica."
+    - name: PasswordHash
+      description: "Hash criptogr\xE1fico da senha."
+    - name: PasswordSalt
+      description: "Salt criptogr\xE1fico aplicado ao hash."
+    - name: rowguid
+      description: Identificador UUID do registro.
+    - name: ModifiedDate
+      description: "Data e hora da \xFAltima modifica\xE7\xE3o."
+  - name: person_person
+    description: "Cadastro consolidado de indiv\xEDduos (clientes B2C, colaboradores\
+      \ e contatos comerciais)."
+    columns:
+    - name: BusinessEntityID
+      description: "Chave prim\xE1ria da pessoa f\xEDsica."
+    - name: PersonType
+      description: "Tipo de indiv\xEDduo: EM (Colaborador), IN (Cliente individual),\
+        \ SC (Contato de loja), etc."
+    - name: NameStyle
+      description: "Estilo ocidental (false: Primeiro \xDAltimo) ou oriental (true:\
+        \ \xDAltimo Primeiro)."
+    - name: Title
+      description: "T\xEDtulo de cortesia (ex: Mr., Ms., Dr.)."
+    - name: FirstName
+      description: Primeiro nome.
+    - name: MiddleName
+      description: Nome do meio ou inicial.
+    - name: LastName
+      description: Sobrenome da pessoa.
+    - name: Suffix
+      description: 'Sufixo familiar (ex: Jr., Sr., III).'
+    - name: EmailPromotion
+      description: "Prefer\xEAncia de e-mail marketing: 0=Nenhum, 1=AdventureWorks,\
+        \ 2=Parceiros."
+    - name: AdditionalContactInfo
+      description: Dados adicionais de contato em formato XML.
+    - name: Demographics
+      description: "Informa\xE7\xF5es demogr\xE1ficas da pessoa em formato XML."
+    - name: rowguid
+      description: Identificador UUID do registro.
+    - name: ModifiedDate
+      description: "Data e hora da \xFAltima modifica\xE7\xE3o."
+  - name: person_personphone
+    description: "N\xFAmeros de telefone associados aos indiv\xEDduos."
+    columns:
+    - name: BusinessEntityID
+      description: "Identificador da pessoa f\xEDsica."
+    - name: PhoneNumber
+      description: "N\xFAmero do telefone com c\xF3digo de \xE1rea."
+    - name: PhoneNumberTypeID
+      description: Chave estrangeira para person_phonenumbertype.
+    - name: ModifiedDate
+      description: "Data e hora da \xFAltima modifica\xE7\xE3o."
+  - name: person_phonenumbertype
+    description: "Classifica\xE7\xE3o do tipo de linha telef\xF4nica."
+    columns:
+    - name: PhoneNumberTypeID
+      description: "Chave prim\xE1ria do tipo de telefone."
+    - name: Name
+      description: 'Nome do tipo de telefone (ex: Cell, Home, Work).'
+    - name: ModifiedDate
+      description: "Data e hora da \xFAltima modifica\xE7\xE3o."
+  - name: person_stateprovince
+    description: "Estados, prov\xEDncias e divis\xF5es administrativas estaduais."
+    columns:
+    - name: StateProvinceID
+      description: "Chave prim\xE1ria do estado/prov\xEDncia."
+    - name: StateProvinceCode
+      description: 'Sigla estadual (ex: WA, CA, SP).'
+    - name: CountryRegionCode
+      description: "C\xF3digo do pa\xEDs pertencente."
+    - name: IsOnlyStateProvinceFlag
+      description: "Indica se o c\xF3digo \xE9 exclusivo para a regi\xE3o."
+    - name: Name
+      description: "Nome por extenso do estado ou prov\xEDncia."
+    - name: TerritoryID
+      description: "Identificador do territ\xF3rio de vendas que atende essa \xE1\
+        rea."
+    - name: rowguid
+      description: Identificador UUID do registro.
+    - name: ModifiedDate
+      description: "Data e hora da \xFAltima modifica\xE7\xE3o."

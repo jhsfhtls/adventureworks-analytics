@@ -1,0 +1,67 @@
+version: 2
+
+models:
+  - name: dim_products
+    description: "Catálogo mestre de produtos e hierarquia de engenharia."
+    columns:
+      - name: product_id
+        description: "Chave primária do produto."
+        tests:
+          - unique
+          - not_null
+      - name: product_number
+        description: "Código SKU do produto."
+        tests:
+          - unique
+          - not_null
+
+  - name: fct_work_orders
+    description: "Fato de ordens de fabricação e acompanhamento de refugo."
+    columns:
+      - name: work_order_id
+        description: "Chave primária da ordem de produção."
+        tests:
+          - unique
+          - not_null
+      - name: product_id
+        description: "Chave estrangeira do produto fabricado."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_products')
+                field: product_id
+      - name: start_date_key
+        description: "Chave de data de início."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_dates')
+                field: date_key
+
+  - name: fct_inventory_snapshots
+    description: "Fato de saldos físicos e valorização de estoque por posto."
+    columns:
+      - name: product_id
+        description: "Chave estrangeira do produto em estoque."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_products')
+                field: product_id
+      - name: location_id
+        description: "Identificador do posto/armazém físico."
+        tests:
+          - not_null
+      - name: stock_health_status
+        description: "Status de risco do estoque."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - 'Crítico (Abaixo do Estoque de Segurança)'
+                  - 'Alerta (Ponto de Reposição)'
+                  - 'Regular'

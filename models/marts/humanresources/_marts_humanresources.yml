@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: dim_employees
+    description: "Dimensão de colaboradores e dados contratuais de RH."
+    columns:
+      - name: employee_id
+        description: "Chave primária do colaborador."
+        tests:
+          - unique
+          - not_null
+      - name: is_current
+        description: "Flag de vínculo ativo."
+        tests:
+          - not_null

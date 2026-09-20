@@ -1,0 +1,107 @@
+version: 2
+sources:
+- name: raw_humanresources
+  database: adventure_works
+  schema: raw
+  description: Tabelas de Recursos Humanos da camada Raw do AdventureWorks.
+  tables:
+  - name: humanresources_department
+    description: Departamentos corporativos da AdventureWorks.
+    columns:
+    - name: DepartmentID
+      description: "Chave prim\xE1ria do departamento."
+    - name: Name
+      description: Nome do departamento.
+    - name: GroupName
+      description: "Grupo executivo/divis\xE3o a que o departamento pertence."
+    - name: ModifiedDate
+      description: "Data da \xFAltima atualiza\xE7\xE3o cadastral."
+  - name: humanresources_employee
+    description: Cadastro e dados contratuais de colaboradores.
+    columns:
+    - name: BusinessEntityID
+      description: "Chave prim\xE1ria do colaborador (FK para person_person)."
+    - name: NationalIDNumber
+      description: "Documento nacional de identifica\xE7\xE3o (SSN/CPF)."
+    - name: LoginID
+      description: Identificador de login de rede corporativa.
+    - name: OrganizationNode
+      description: "N\xF3 de posi\xE7\xE3o hier\xE1rquica na organiza\xE7\xE3o."
+    - name: OrganizationLevel
+      description: "N\xEDvel hier\xE1rquico na \xE1rvore da empresa."
+    - name: JobTitle
+      description: "T\xEDtulo oficial do cargo."
+    - name: BirthDate
+      description: Data de nascimento do colaborador.
+    - name: MaritalStatus
+      description: 'Estado civil: M (Casado), S (Solteiro).'
+    - name: Gender
+      description: "G\xEAnero: M (Masculino), F (Feminino)."
+    - name: HireDate
+      description: "Data de admiss\xE3o na empresa."
+    - name: SalariedFlag
+      description: "Indica se o colaborador \xE9 assalariado (true) ou horista (false)."
+    - name: VacationHours
+      description: "Saldo de horas de f\xE9rias dispon\xEDveis."
+    - name: SickLeaveHours
+      description: "Saldo de horas de licen\xE7a m\xE9dica acumuladas."
+    - name: CurrentFlag
+      description: "Indica se o colaborador est\xE1 ativo (true) ou desligado (false)."
+    - name: rowguid
+      description: Identificador UUID do registro.
+    - name: ModifiedDate
+      description: "Data e hora da \xFAltima modifica\xE7\xE3o."
+  - name: humanresources_employeedepartmenthistory
+    description: "Hist\xF3rico de aloca\xE7\xF5es dos colaboradores em departamentos\
+      \ e turnos."
+    columns:
+    - name: BusinessEntityID
+      description: Identificador do colaborador.
+    - name: DepartmentID
+      description: Identificador do departamento alocado.
+    - name: ShiftID
+      description: Identificador do turno de trabalho.
+    - name: StartDate
+      description: "Data de in\xEDcio no departamento."
+    - name: EndDate
+      description: "Data de encerramento da aloca\xE7\xE3o (nulo se atual)."
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."
+  - name: humanresources_employeepayhistory
+    description: "Hist\xF3rico de taxas salariais e remunera\xE7\xE3o dos colaboradores."
+    columns:
+    - name: BusinessEntityID
+      description: Identificador do colaborador.
+    - name: RateChangeDate
+      description: Data em que a taxa salarial entrou em vigor.
+    - name: Rate
+      description: "Valor do sal\xE1rio ou taxa hor\xE1ria."
+    - name: PayFrequency
+      description: "Frequ\xEAncia de pagamento: 1 (Mensal), 2 (Quinzenal)."
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."
+  - name: humanresources_jobcandidate
+    description: "Registro e curr\xEDculos de candidatos a vagas na empresa."
+    columns:
+    - name: JobCandidateID
+      description: "Chave prim\xE1ria do candidato."
+    - name: BusinessEntityID
+      description: "Identificador do colaborador se admitido (nulo caso contr\xE1\
+        rio)."
+    - name: Resume
+      description: "Conte\xFAdo do curr\xEDculo em formato XML."
+    - name: ModifiedDate
+      description: "Data e hora da \xFAltima modifica\xE7\xE3o."
+  - name: humanresources_shift
+    description: "Turnos de trabalho da organiza\xE7\xE3o."
+    columns:
+    - name: ShiftID
+      description: "Chave prim\xE1ria do turno."
+    - name: Name
+      description: Nome do turno (Day, Evening, Night).
+    - name: StartTime
+      description: "Hor\xE1rio de in\xEDcio do turno."
+    - name: EndTime
+      description: "Hor\xE1rio de t\xE9rmino do turno."
+    - name: ModifiedDate
+      description: "Data da \xFAltima modifica\xE7\xE3o."

@@ -1,0 +1,15 @@
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.dbt/
+profiles.yml
+!profiles.example.yml
+target/
+dbt_packages/
+dbt_internal_packages/
+logs/
+.streamlit/secrets.toml
