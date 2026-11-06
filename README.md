@@ -1,7 +1,7 @@
-# AdventureWorks Dimensional Modeling & ELT Pipeline (dbt, SQL & Databricks)
+# AdventureWorks Dimensional Modeling & ELT Pipeline (dbt, SQL, Databricks & Power BI)
 
 > **Context & Repository History:**  
-> This project implements a Kimball Star Schema dimensional model using **dbt Core**, **SQL**, and **Databricks Unity Catalog** over the classic **AdventureWorks** ERP dataset (Sales, Production, Purchasing, Inventory, and HR).  
+> This project implements a Kimball Star Schema dimensional model using **dbt Core**, **SQL**, **Databricks Unity Catalog**, and **Power BI** over the classic **AdventureWorks** ERP dataset (Sales, Production, Purchasing, Inventory, and HR).  
 > *Note on Git history:* This project was originally developed during my Analytics Engineering certification training and later extracted from a consolidated personal monorepo into this standalone repository.
 
 ---
@@ -15,7 +15,7 @@ flowchart LR
     RAW["Raw OLTP Sources (sales, production, purchasing, hr, person)"] --> STG["Staging Layer (models/staging/*)"]
     STG --> INT["Intermediate Layer (models/intermediate/*)"]
     INT --> MARTS["Gold Dimensional Marts (models/marts/*)"]
-    MARTS --> BI["Power BI Dashboards & SQL Analytics"]
+    MARTS --> BI["Power BI Report (.pbix) & SQL Analytics"]
 ```
 
 ### Layer Breakdown
@@ -59,13 +59,15 @@ dbt build
 
 ---
 
-## 3. Analytical Dashboards (Power BI Visual Previews)
+## 3. Power BI Report (`.pbix`) & Visual Previews
 
-The Gold Mart tables (`fct_sales`, `fct_work_orders`, `fct_inventory_snapshots`, `fct_purchases`, `dim_*`) feed a 6-page Power BI report covering Sales, Customers, Production, Inventory, Purchasing, and HR. Static previews of the rendered pages are stored in [`dashboard/powerbi_backgrounds/`](dashboard/powerbi_backgrounds/):
-
-- `dash_pg_01_vendas.png` — Commercial & Sales Performance
-- `dash_pg_02_clientes.png` — Customer Segmentation & Retention
-- `dash_pg_03_producao.png` — Manufacturing & Work Order Efficiency
-- `dash_pg_04_estoque.png` — Inventory Turnover & Stock Levels
-- `dash_pg_05_compras.png` — Vendor Lead Times & Purchasing
-- `dash_pg_06_rh.png` — Headcount & Department Analytics
+- **Power BI File ([`dashboard/AdventureWorks_Executive_Analytics_Platform.pbix`](dashboard/AdventureWorks_Executive_Analytics_Platform.pbix)):**
+  - The `.pbix` file is included in the repository with its cached VertiPaq data model so you can open it directly in **Power BI Desktop** offline to inspect the 6 report pages, Star Schema relationships, and DAX measures without needing an active cloud connection.
+  - *Note for live refresh:* The Power Query (`M`) connection in the `.pbix` points to the development Databricks SQL Warehouse used when the certification project was built. To refresh the data against your own Databricks environment after running `dbt build`, open **Transform data ➔ Data source settings** in Power BI Desktop and update the Databricks Server Hostname and HTTP Path to your workspace.
+- **Static Page Previews (`dashboard/powerbi_backgrounds/`):**
+  - `dash_pg_01_vendas.png` — Commercial & Sales Performance
+  - `dash_pg_02_clientes.png` — Customer Segmentation & Retention
+  - `dash_pg_03_producao.png` — Manufacturing & Work Order Efficiency
+  - `dash_pg_04_estoque.png` — Inventory Turnover & Stock Levels
+  - `dash_pg_05_compras.png` — Vendor Lead Times & Purchasing
+  - `dash_pg_06_rh.png` — Headcount & Department Analytics
