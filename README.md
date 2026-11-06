@@ -62,11 +62,11 @@ dbt build
 ## 3. Power BI Report (`.pbix`) & Visual Previews
 
 - **Power BI File ([`dashboard/AdventureWorks_Executive_Analytics_Platform.pbix`](dashboard/AdventureWorks_Executive_Analytics_Platform.pbix)):**
-  - The `.pbix` file includes the cached VertiPaq data model and native visuals (including the standardized **Choropleth / Filled Map (`filledMap`)** for regional customer/revenue distribution) so you can open it directly in **Power BI Desktop** offline without popups or an active cloud connection.
+  - The `.pbix` file includes the cached VertiPaq data model and 100% native visuals (using a **Clustered Bar Chart with Country ➔ State/Province drill-down** instead of legacy map visuals that trigger Bing/Azure Maps deprecation popups) so you can open it directly in **Power BI Desktop** offline without any popups or an active cloud connection.
   - *Note for live refresh:* The Power Query (`M`) connection in the `.pbix` points to the development Databricks SQL Warehouse used when the certification project was built. To refresh the data against your own Databricks environment after running `dbt build`, open **Transform data ➔ Data source settings** in Power BI Desktop and update the Databricks Server Hostname and HTTP Path to your workspace.
 - **Static Page Previews (`dashboard/powerbi_backgrounds/`):**
   - `dash_pg_01_vendas.png` — Commercial & Sales Performance
-  - `dash_pg_02_clientes.png` — Customer Segmentation, Retention & Regional Choropleth Map (`filledMap`)
+  - `dash_pg_02_clientes.png` — Customer Segmentation, Retention & Regional Revenue Breakdown (Country/State Drill-down)
   - `dash_pg_03_producao.png` — Manufacturing & Work Order Efficiency
   - `dash_pg_04_estoque.png` — Inventory Turnover & Stock Levels
   - `dash_pg_05_compras.png` — Vendor Lead Times & Purchasing
